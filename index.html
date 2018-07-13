@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="shoppingListApp">
+<head>
+  <meta charset = "utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+  <script src="shoppingList.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="shoppingList.css">
+</head>
+<body>
+  <div class="container page-header">
+    <h1>Shopping List</h1>
+  </div>
+  <div ng-controller="ShoppingListController" class="container">
+    <form ng-submit="addItem()">
+      <div>
+        <span class="col-xs-2">
+          Item:
+        </span>
+        <span>
+          <input type="text" ng-model="itemText"  size="30"
+          placeholder="add new item here" required>
+        </span>
+      </div>
+      <div>
+        <span class="col-xs-2">
+          Category:
+        </span>
+        <span>
+          <input type="text" ng-model="itemCategory"  size="30"
+          placeholder="specify category">
+        </span>
+      </div>
+      <div>
+        <input class="btn" type="submit" value="Add item">
+      </div>
+    </form>
+    <div>{{getRemaining()}} of {{items.length}} remaining</div>
+    <input type="button" class="btn" value="Uncheck all" ng-click="uncheckAll()">
+    <input type="button" class="btn" value="Remove checked" ng-click="removeChecked()">
+    <ul class="list-unstyled">
+      <li ng-repeat="item in items | orderBy:['checked','text']">
+        <div class="checkbox">
+          <span class="glyphicon glyphicon-remove" ng-click="removeItem(item)"></span>
+          <label>
+            <input type="checkbox" ng-model="item.checked" ng-click="toggleChecked(item)">
+            <span class="checked-{{item.checked}}">{{item.text}}</span>
+          </label>
+          <br>
+          <span class="small text-muted">{{item.category}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
